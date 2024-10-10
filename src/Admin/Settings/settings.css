@@ -1,0 +1,58 @@
+.dashboard-container {
+    padding: 30px 60px 60px 60px;
+    margin-left: 290px;
+}
+
+.dashboard-container h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.dashboard-container p {
+    font-size: 1rem;
+    color: #666;
+}
+.settings-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2, h3 {
+    color: #333;
+  }
+  
+  .settings-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .settings-form input[type="text"],
+  .settings-form input[type="email"],
+  .settings-form input[type="tel"],
+  .settings-form input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .save-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .save-button:hover {
+    background-color: #45a049;
+  }
+  

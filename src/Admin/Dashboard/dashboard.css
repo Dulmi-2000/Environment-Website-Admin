@@ -1,0 +1,192 @@
+.dashboard-container {
+    margin-left: 350px;
+    margin-left: 290px;
+    display: flex;
+}
+
+.dashboard-content{
+    margin: 100px 30px 0px 30px;
+    flex-direction: column;
+    gap: 50px;
+    display: flex;  
+    
+}
+
+.dashboard-topbar{
+    width: 100%;
+}
+
+.first-row{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 73px;
+    flex-wrap: wrap;
+}
+
+.info-box{
+    height: 90px;
+    width: 305px;
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    padding: 20px 0px 20px 0px;
+    border:  solid 1px #2d6a4f59; 
+    flex-direction: row;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-title{
+    font-size: 18px;
+    color: #2d6a4f;
+}
+
+.box-title-count{
+    margin-top: -10px;
+    font-size: 25px;
+    color: #2d6a4f;
+}
+
+.box-side{
+    display: flex;
+    flex-direction: column;
+}
+
+.icon-box {
+    background-color: #2d6a4f;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 48%;
+    margin-top: 40px;
+}
+
+.icon{
+    color: white;
+    display: flex;
+    font-size: 25px;
+}
+
+.graph-box{
+    background-color: white;
+    padding: 10px;
+    height: max-content;
+    width: max-content;
+    border-radius: 5px;
+    border:  solid 1px #2d6a4f59;
+    align-items: center;
+    justify-content: center;
+}
+
+.graph-image{
+    height: 250px;
+    width: 650px;
+    padding: 15px;
+}
+
+.chart-image{
+    height: 300px;
+    width: 450px;
+    padding: 15px;
+}
+.graph-title{
+    font-size: 22px;
+    color: #2d6a4f;
+    padding: 5px 20px;
+}
+
+.second-row{
+    gap: 80px;
+    flex-direction: row;
+    display: flex;
+}
+
+.todo{
+    background-color: white;
+    border-radius: 5px;
+    border:  solid 1px #2d6a4f59;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.todo-info{
+    display: flex;
+    flex-direction: row;
+    gap: 480px;
+    align-items: center;
+}
+
+.icon-plus {
+    background-color: #2d6a4f;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.tasks{
+    margin-top: -30px;
+}
+
+
+
+/* Container to hold Data Analysis, Activity Feed, and Calendar in a single row */
+.single-row-container {
+    display: flex;
+    flex-wrap: wrap; /* Ensure items stay in a single row */
+    gap: 50px; /* Space between items */
+}
+
+/* Style for each box */
+.single-row-box {
+    background-color: white;
+    border-radius: 5px;
+    border: solid 1px #2d6a4f59;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Specific sizing for each box */
+.data-analysis-box {
+    min-width: 300px; 
+}
+
+.activity-feed-box {
+    min-width: 500px; 
+}
+
+.calendar-box {
+    min-width: 200px;
+    height: 400px; 
+}
+
+.data-analysis-image {
+    height: 300px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.calendar-header {
+    font-size: 22px;
+    color: #2d6a4f;
+    margin-bottom: 10px;
+}
+.dashboard-container {
+    margin-left: 200px; 
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebar-collapsed .dashboard-container {
+    margin-left: 80px; 
+}

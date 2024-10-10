@@ -1,0 +1,89 @@
+.admin-registration{
+    background-color:  white;
+    align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.reg-pglogo{
+    margin: 18px 25px;
+    position: absolute; 
+    top: 10px;         
+    left: 10px;     
+    width: 450px;
+}
+
+.headings-reg{
+  color: #044e35d2;
+  font-size: 30px;
+  font-weight: 700;
+  
+}
+
+.reg-form{
+    flex-direction: column;
+    display: flex;
+    gap: 22px;
+    position: fixed;
+    
+}
+
+.reg-input{
+    padding: 12px;
+    font-size: 16px;
+    width: 300px;
+    border-radius: 6px;
+    border: 1px solid #044e35d2;
+}
+
+.reg-input:active{
+    border-radius: 6px;
+    border: 1px solid #044e35d2;
+}
+
+.reg-btn{
+    background-color: #2d6a4f;
+    color: white;
+    font-size: 17px;
+    font-weight: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: none;
+    letter-spacing: 0.5px;
+    margin-top: 20px;
+}
+
+.chek-box{
+    margin-left: 50px;
+    display: flex;
+    background-color: #044e35d2;;
+}
+
+.link{
+    color: #044e35d2;;
+}
+
+.agree-txt{
+    margin-top: 25px;
+    display: flex;
+}
+
+.agree{
+    margin-left: 10px;
+}
+
+.check{
+    background-color: #044e35d2;
+    display: flex;
+}
+
+.signin-link{
+    margin-top: 800px;
+    display: flex;
+}

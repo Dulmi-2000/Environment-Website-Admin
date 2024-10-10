@@ -1,0 +1,48 @@
+.profile-info-section{
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    width: 800px;
+    border: 1px solid rgb(155, 155, 154);
+    padding: 40px;
+}
+
+.profile-data{
+ 
+    flex-direction: column;
+    gap: 10px;
+    display: flex;
+}
+
+.profile-info{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+}
+.profile-image-preview{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    display: flex;
+    background-color: antiquewhite;
+    margin-bottom: 50px;
+}
+
+.profile-row {
+    display: flex;
+    justify-content: flex-start; 
+    padding: 5px 0; /* Vertical spacing between rows */
+}
+
+.profile-label {
+    font-weight: 600;
+    font-size: 20px;
+    width: 200px; /* Fixed width for labels to align them properly */
+}
+
+.profile-info {
+    flex: 1; /* Allow info to take remaining space */
+    font-size: 17px;
+    letter-spacing: 0.45;
+}
