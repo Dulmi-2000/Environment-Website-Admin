@@ -1,0 +1,78 @@
+.media-container {
+   margin-top: 100px;
+   width: 100%;
+   margin-left: 10px;
+   
+  }
+  
+  /* Input styling */
+  .media-upload-input {
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    border-radius: 4px;
+    border: 1px solid  #2d6a4f;
+    cursor: pointer;
+    font-size: 15px;
+    letter-spacing: 0.45px;
+    font-weight: 500;
+    margin-left: 20px;
+    margin-bottom: -25px;
+  }
+  
+  /* Flex container for the images */
+  .media-images-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 100px;
+  }
+  
+  /* Each individual image container */
+  .media-image-wrapper {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  /* Image styling */
+  .media-image-wrapper img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+    border: 1px solid rgb(185, 185, 185)  
+  }
+  
+  /* Image hover effect */
+  .media-image-wrapper img:hover {
+    transform: scale(1.1);
+  }
+  
+  .images-display{
+    display: flex;
+    margin-top: 100px;
+    flex-wrap: wrap;
+    gap: 60px;
+    margin-left: 30px;
+  }
+
+  .media-image-wrapper.selected {
+    border: 2px solid red; 
+  }
+  
+  .delete-button {
+    margin-left: -10px;
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: transparent;
+  }
+  
+  
+  .del{
+    font-size: 20px;
+    color: red;
+    background-color: transparent;
+    display: flex;
+  }

@@ -1,0 +1,164 @@
+.complaint-page{
+    margin-left: 290px;
+    padding: 30px 60px 60px 60px;
+    
+    height: 100vh;
+}
+
+/* complaints.css */
+
+.dashboard-content{
+    margin: 110px 30px 0px 30px;
+    flex-direction: column;
+    gap: 50px;
+    display: flex;  
+    
+}
+  .complaints-table {
+    width: 100%;
+    max-width: 1450px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    margin: 100px 30px 0px 30px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  thead th {
+    background-color: #2d6a4f;
+    color: #fff;
+    padding: 15px;
+    text-align: left;
+  }
+  
+  tbody td {
+    padding: 13px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+ 
+  /* Action Button Styles */
+  .action-button {
+    background-color: #2d6a4f;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .action-button:hover {
+    background-color: #06be80ea; ;
+  }
+  
+/* complaints.css */
+
+.action-button {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #c9302c;
+}
+
+.action-button i {
+  font-size: 16px;
+}
+
+
+.action-button {
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.action-button.done {
+  background-color: #2d6a4f;
+}
+
+.action-button.pending {
+  background-color: #FFA500; 
+}
+
+
+.row-done {
+  color: #696969d8; 
+  background-color: #deeee090;
+}
+
+
+
+.custom-checkbox {
+  width: 18px;
+  height: 18px;
+  background-color: #2d6a4f;
+  border-radius: 4px;
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.task-item input[type="checkbox"]:checked + .custom-checkbox {
+  background-color: #54aa838f;
+}
+
+.task-item input[type="checkbox"]:checked + .custom-checkbox::after {
+  content: "";
+  position: absolute;
+  left: 7px;  /* Adjusted to center the tick */
+  top: 3px;   /* Adjusted to center the tick */
+  width: 3px; /* Reduced width */
+  height: 8px; /* Reduced height */
+  border: 1px solid white;
+  border-width: 0 2px 2px 0; /* Adjusted border-width for a thinner tick */
+  transform: rotate(45deg);
+  
+}
+
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+      width: 100%;
+    }
+  
+    thead {
+      display: none;
+    }
+  
+    tr {
+      margin-bottom: 10px;
+      border-bottom: 2px solid #ddd;
+    }
+  
+    td {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      text-align: left;
+    }
+  
+    td:before {
+      content: attr(data-label);
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+  
