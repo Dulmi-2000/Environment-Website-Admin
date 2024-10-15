@@ -3,130 +3,99 @@ const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const path = require('path');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 // Configure multer for file upload
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/profileImages');
+        cb(null, 'uploads/profileImages');  // Ensure this directory exists
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname)); 
+        cb(null, Date.now() + path.extname(file.originalname));  // Generate a unique filename
     }
 });
 
 const upload = multer({ storage });
 
-// Register new admin
-
-// Registration function
-const registerAdmin = async (req, res) => {
-    const { username, password, fullName, email, phone } = req.body;
-
-    const normalizedUsername = username.trim().toLowerCase();
-    const normalizedPassword = password.trim();
-
+// Registration Function
+async function registerAdmin(req, res) {
     try {
-        const existingAdmin = await Admin.findOne({ username: normalizedUsername });
+        const { fullName, email, username, password, phone } = req.body;
+
+        // Check if username or email already exists
+        const existingAdmin = await Admin.findOne({ username });
         if (existingAdmin) {
-            return res.status(400).json({ message: 'Admin already exists' });
+            return res.status(400).json({ message: 'Username already exists' });
         }
 
-        const hashedPassword = await bcrypt.hash(normalizedPassword, 10);
-        console.log("Hashed password:", hashedPassword);
+        // Hash the password before storing it
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         const newAdmin = new Admin({
-            username: normalizedUsername,
-            password: hashedPassword,
             fullName,
             email,
-            phone,
+            username,
+            password: hashedPassword,
+            phone
         });
 
+        // Save the new admin to the database
         await newAdmin.save();
         res.status(201).json({ message: 'Admin registered successfully' });
     } catch (error) {
-        console.error("Error registering admin:", error);
-        res.status(500).json({ message: 'Server error' });
+        console.error('Registration error:', error);
+        res.status(500).json({ message: 'Error registering admin', error: error.message });
     }
-};
+}
 
-// Login function
+// Login Function
 
-const loginAdmin = async (req, res) => {
-    const username = req.body.username.trim().toLowerCase();
-    const password = req.body.password.trim();
+
+async function loginAdmin(req, res) {
+    const { username, password } = req.body;
 
     try {
-        console.log("Login attempt with username:", username);
-
         const admin = await Admin.findOne({ username });
         if (!admin) {
-            console.log("Admin not found");
             return res.status(401).json({ message: 'Invalid username or password' });
         }
 
-        console.log("Admin found:", admin);
-        console.log("Hashed password from DB:", admin.password);
-
-        // Compare the password
-        const isMatch = await bcrypt.compare(password, admin.password);
-        console.log("Plain password:", password);
-        console.log("Password match result:", isMatch); // Log the result of comparison
-
-        if (!isMatch) {
-            console.log("Password does not match for username:", username);
+        const passwordMatch = await bcrypt.compare(password, admin.password);
+        if (passwordMatch) {
+            const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+            return res.status(200).json({ token });
+        } else {
             return res.status(401).json({ message: 'Invalid username or password' });
         }
-
-        // Create JWT token
-        const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
-        res.status(200).json({
-            message: 'Login successful',
-            token,
-            admin: {
-                fullName: admin.fullName,
-                email: admin.email,
-                username: admin.username,
-                phone: admin.phone,
-            },
-        });
     } catch (error) {
-        console.error("Error during login:", error);
-        res.status(500).json({ message: 'Server error' });
+        console.error(error);
+        return res.status(500).json({ message: 'Server error' });
     }
-};
+}
 
 
-
-
-
-
-
+// Verify token middleware
 const verifyToken = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1]; // Extract token from headers
+    const token = req.headers['authorization']?.split(' ')[1];
     if (!token) {
-        console.log("No token provided");
         return res.status(403).json({ message: 'No token provided.' });
     }
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret', async (err, decoded) => {
         if (err) {
-            console.log("Failed to authenticate token:", err);
             return res.status(403).json({ message: 'Failed to authenticate token.' });
         }
-        req.user = await Admin.findById(decoded.id); // Ensure 'id' is correct
+        req.user = await Admin.findById(decoded.id);
         if (!req.user) {
-            console.log("User not found in DB");
             return res.status(403).json({ message: 'User not found.' });
         }
         next();
     });
 };
 
- 
- // Route to get the admin profile
- const getAdminProfile = async (req, res) => {
+// Route to get the admin profile
+const getAdminProfile = async (req, res) => {
     try {
-        const admin = req.user; // Use the user set in the verifyToken middleware
+        const admin = req.user;
         if (!admin) {
             return res.status(404).json({ message: 'Admin not found' });
         }
@@ -134,7 +103,7 @@ const verifyToken = (req, res, next) => {
         res.status(200).json({
             display_name: admin.fullName,
             email: admin.email,
-            role: admin.role, // Make sure your Admin model has a role field
+            role: admin.role,
             profile_picture: admin.profileImage || '../../Assets/profile.png'
         });
     } catch (error) {
@@ -143,16 +112,13 @@ const verifyToken = (req, res, next) => {
     }
 };
 
-
 // Update Admin Profile
 const updateAdminProfile = async (req, res) => {
     try {
-        const adminId = req.user._id; // Assuming you're using JWT to get the admin ID
+        const adminId = req.user._id;
         const { fullName, email, username, phone, profileName, profileImage } = req.body;
 
-        // Create an object to hold the update fields
         const updateFields = {};
-
         if (fullName) updateFields.fullName = fullName;
         if (email) updateFields.email = email;
         if (username) updateFields.username = username;
@@ -160,20 +126,17 @@ const updateAdminProfile = async (req, res) => {
         if (profileName) updateFields.profileName = profileName;
         if (profileImage) updateFields.profileImage = profileImage;
 
-        // Update admin profile
         const updatedAdmin = await Admin.findByIdAndUpdate(adminId, updateFields, { new: true, runValidators: true }).select('-password');
-        
         if (!updatedAdmin) {
             return res.status(404).json({ message: 'Admin not found' });
         }
-        
+
         res.status(200).json(updatedAdmin);
     } catch (error) {
+        console.error('Error updating admin profile:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
-
-
 
 module.exports = {
     upload,
