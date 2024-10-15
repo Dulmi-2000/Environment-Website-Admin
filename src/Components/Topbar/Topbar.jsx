@@ -39,12 +39,12 @@ const Topbar = ({ onLogout }) => {
                 <div className="profile-container" onClick={toggleDropdown}>
                     <img src={profileImage} alt="Profile" className="profile-logo" />
                     {isDropdownOpen && (
-                        <div className="dropdown">
-                            <Link to="/Profile" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
-                                <CgProfile className="dropdown-icon" /> Profile
+                        <div className="dropdowns">
+                            <Link to="/Profile" className="dropdown-items" onClick={() => setDropdownOpen(false)}>
+                                <CgProfile className="dropdown-icons" /> Profile
                             </Link>
-                            <Link to="#" className="dropdown-item" onClick={handleLogout}>
-                                <MdLogout className="dropdown-icon" /> Logout
+                            <Link to="#" className="dropdown-items" onClick={handleLogout}>
+                                <MdLogout className="dropdown-icons" /> Logout
                             </Link>
                         </div>
                     )}

@@ -49,7 +49,7 @@ const Sidebar = ({ onToggle }) => {
       <ul>
         <li className='sidebar-item'>
           <NavLink 
-            to="/" 
+            to="/Dashboard" 
             className={({ isActive }) => `sidebar-link-container ${isActive ? 'active' : ''}`}
           >
             <RiDashboardHorizontalFill className='sidebar-icon' />
