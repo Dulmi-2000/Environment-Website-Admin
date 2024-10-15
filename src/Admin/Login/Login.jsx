@@ -1,42 +1,59 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../../Assets/logo.png'; // Update with the correct path to your logo
-import axios from 'axios'; // Ensure you have axios installed for API calls
+import logo from '../../Assets/logo.png'; 
+import axios from 'axios'; 
 
 const AdminLogin = ({ onLogin }) => {
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({ ...prevState, [name]: value }));
-    };
 
-    const handleLogin = async (e) => {
-        e.preventDefault(); // Prevent the default form submission
-
-        try {
-            const response = await axios.post('http://localhost:3000/api/admin/login', {
-                username: formData.username,
-                password: formData.password,
-            });
-            console.log('Login successful:', response.data);
-            
-            // Store the token in local storage
-            localStorage.setItem('token', response.data.token);
-            
-            // Call the onLogin prop if you have one
-            onLogin(); 
-            
-            // Redirect to the dashboard or another page
-            navigate('/dashboard'); 
-        } catch (error) {
-            console.error('Login error:', error.response.data);
-            setError(error.response.data.message); // Show the error message
+        if (error) {
+            setError('');
         }
     };
 
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        
+        const normalizedUsername = formData.username.trim().toLowerCase();
+        const normalizedPassword = formData.password.trim();  // Trim password as well
+    
+        console.log('Submitting Login:', { username: normalizedUsername, password: normalizedPassword });
+    
+        try {
+            const response = await axios.post('http://localhost:3000/api/admin/login', {
+                username: normalizedUsername,
+                password: normalizedPassword,
+            });
+    
+            console.log('Login successful:', response.data);
+            if (response.data.token) {
+                localStorage.setItem('token', response.data.token);
+                onLogin(); 
+                navigate('/Dashboard'); 
+            }
+        } catch (error) {
+            console.error('Error Response:', error.response);
+            if (error.response) {
+                setError(error.response.data.message);
+            } else {
+                setError('An unexpected error occurred. Please try again later.');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+    
+    
+    
     return (
         <div className="admin-registration">
             <img src={logo} alt='logo' className='reg-pglogo' />
@@ -63,7 +80,9 @@ const AdminLogin = ({ onLogin }) => {
                     placeholder='Password'
                     className='reg-input'
                 />
-                <button type="submit" className="reg-btn">Login</button>
+                <button type="submit" className="reg-btn" disabled={loading}>
+                    {loading ? 'Logging in...' : 'Login'}
+                </button>
             </form>
             <p className='signin-link'>
                 Don't have an account? <Link to="/Signup">Sign up here</Link>
