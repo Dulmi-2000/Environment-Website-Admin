@@ -11,7 +11,8 @@ router.post('/login', adminController.loginAdmin);
 router.get('/profile', adminController.verifyToken, adminController.getAdminProfile);
 
 // Route for updating admin profile
-router.put('/update', adminController.verifyToken, adminController.updateAdminProfile);
+router.put('/profile/:id', adminController.verifyToken, adminController.updateProfile);
 
+router.get('/admin/:id', adminController.verifyToken, adminController.getAdminById);
 
 module.exports = router;

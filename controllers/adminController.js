@@ -8,10 +8,10 @@ require('dotenv').config();
 // Configure multer for file upload
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/profileImages');  // Ensure this directory exists
+        cb(null, 'uploads/profileImages');  
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));  // Generate a unique filename
+        cb(null, Date.now() + path.extname(file.originalname)); 
     }
 });
 
@@ -22,13 +22,11 @@ async function registerAdmin(req, res) {
     try {
         const { fullName, email, username, password, phone } = req.body;
 
-        // Check if username or email already exists
         const existingAdmin = await Admin.findOne({ username });
         if (existingAdmin) {
             return res.status(400).json({ message: 'Username already exists' });
         }
 
-        // Hash the password before storing it
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newAdmin = new Admin({
@@ -39,7 +37,6 @@ async function registerAdmin(req, res) {
             phone
         });
 
-        // Save the new admin to the database
         await newAdmin.save();
         res.status(201).json({ message: 'Admin registered successfully' });
     } catch (error) {
@@ -48,9 +45,8 @@ async function registerAdmin(req, res) {
     }
 }
 
+
 // Login Function
-
-
 async function loginAdmin(req, res) {
     const { username, password } = req.body;
 
@@ -92,6 +88,8 @@ const verifyToken = (req, res, next) => {
     });
 };
 
+
+
 // Route to get the admin profile
 const getAdminProfile = async (req, res) => {
     try {
@@ -101,6 +99,7 @@ const getAdminProfile = async (req, res) => {
         }
 
         res.status(200).json({
+            id: admin._id, 
             display_name: admin.fullName,
             email: admin.email,
             role: admin.role,
@@ -112,22 +111,48 @@ const getAdminProfile = async (req, res) => {
     }
 };
 
+
+
 // Update Admin Profile
-const updateAdminProfile = async (req, res) => {
+const mongoose = require('mongoose'); // Import mongoose
+
+const updateProfile = async (req, res) => {
     try {
-        const adminId = req.user._id;
-        const { fullName, email, username, phone, profileName, profileImage } = req.body;
+        const adminId = req.params.id;
+
+        // Check if adminId is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(adminId)) {
+            return res.status(400).json({ message: 'Invalid admin ID format' });
+        }
+
+        console.log('Admin ID:', adminId);
+        console.log('Incoming data:', req.body);
+        console.log('Received data:', req.body); // Check if form data is parsed correctly
+        console.log('Received file:', req.file);
+        // Handle file uploads if using multer
+        const { fullName, email, username, phone } = req.body;
+        const profileImage = req.file ? req.file.path : undefined;
 
         const updateFields = {};
-        if (fullName) updateFields.fullName = fullName;
+        if (fullName) updateFields.display_name = fullName;
         if (email) updateFields.email = email;
         if (username) updateFields.username = username;
         if (phone) updateFields.phone = phone;
-        if (profileName) updateFields.profileName = profileName;
-        if (profileImage) updateFields.profileImage = profileImage;
+        if (profileImage) updateFields.profile_picture = profileImage;
 
+        // Validate if the username already exists (optional)
+        if (username) {
+            const existingUser = await Admin.findOne({ username });
+            if (existingUser && existingUser._id.toString() !== adminId) {
+                return res.status(400).json({ message: 'Username is already taken' });
+            }
+        }
+
+        // Update the admin profile
         const updatedAdmin = await Admin.findByIdAndUpdate(adminId, updateFields, { new: true, runValidators: true }).select('-password');
+
         if (!updatedAdmin) {
+            console.error('Admin not found for ID:', adminId);
             return res.status(404).json({ message: 'Admin not found' });
         }
 
@@ -138,11 +163,41 @@ const updateAdminProfile = async (req, res) => {
     }
 };
 
+module.exports = { updateProfile };
+
+
+
+
+
+async function getAdminById(adminId) {
+    if (!mongoose.Types.ObjectId.isValid(adminId)) {
+        console.log('Invalid Admin ID format.');
+        return { error: 'Invalid Admin ID format.' };
+    }
+
+    try {
+        const admin = await Admin.findById(adminId);
+        if (!admin) {
+            console.log(`Admin not found for ID: ${adminId}`);
+            return { error: 'Admin not found' };
+        }
+        console.log(`Admin found: ${admin}`);
+        return admin;
+    } catch (error) {
+        console.error('Error fetching admin by ID:', error);
+        return { error: 'Database error' };
+    }
+}
+
+
+
+
 module.exports = {
     upload,
     registerAdmin,
     loginAdmin,
     verifyToken,
-    updateAdminProfile,
-    getAdminProfile
+    updateProfile,
+    getAdminProfile,
+    getAdminById
 };
