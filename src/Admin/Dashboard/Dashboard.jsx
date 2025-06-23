@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './dashboard.css';
 import Topbar from "../../Components/Topbar/Topbar";
-import Sidebar from "../../Components/Sidebar/Sidebar"; 
+import Sidebar from "../../Components/Sidebar/Sidebar";
 import { IoMailUnreadOutline } from "react-icons/io5";
 import { TbMessage } from "react-icons/tb";
 import { BsPersonAdd } from "react-icons/bs";
@@ -25,41 +25,41 @@ function Dashboard() {
 
     // Fetch total complaints from the API
     useEffect(() => {
-      const fetchComplaintsCount = async () => {
-        try {
-        
-          const response = await axios.get('http://localhost:3000/api/complaints');
-   
-          setComplaintsCount(response.data.length); 
-        } catch (error) {
-          console.error('Error fetching complaints:', error);
-        }
-      };
-  
-      fetchComplaintsCount(); 
-    }, []);
-  
+        const fetchComplaintsCount = async () => {
+            try {
 
-       // Fetch total Inquiries from the API
-       useEffect(() => {
-        const fetchInquiriessCount = async () => {
-          try {
-            
-            const response = await axios.get('http://localhost:3000/api/inquiries');
-            
-            setInquiriesCount(response.data.length); // Set the count based on the length of the array
-          } catch (error) {
-            console.error('Error fetching inquiries:', error);
-          }
+                const response = await axios.get('http://localhost:3000/api/complaints');
+
+                setComplaintsCount(response.data.length);
+            } catch (error) {
+                console.error('Error fetching complaints:', error);
+            }
         };
-    
-        fetchInquiriessCount(); 
-      }, []); // Empty dependency array ensures this runs only once on component mount
-  
-      const navigate = useNavigate();
 
-      const handleBoxClick = () => {
-          navigate("/Complaints");
+        fetchComplaintsCount();
+    }, []);
+
+
+    // Fetch total Inquiries from the API
+    useEffect(() => {
+        const fetchInquiriessCount = async () => {
+            try {
+
+                const response = await axios.get('http://localhost:3000/api/inquiries');
+
+                setInquiriesCount(response.data.length);
+            } catch (error) {
+                console.error('Error fetching inquiries:', error);
+            }
+        };
+
+        fetchInquiriessCount();
+    }, []);
+
+    const navigate = useNavigate();
+
+    const handleBoxClick = () => {
+        navigate("/Complaints");
     };
 
     const handleBoxClick1 = () => {
@@ -67,10 +67,10 @@ function Dashboard() {
     };
     const handleBoxClick2 = () => {
         navigate("/Jobs");
-  };
-  const handleBoxClick3 = () => {
-    navigate("/NgoRegistartions");
-};
+    };
+    const handleBoxClick3 = () => {
+        navigate("/NgoRegistartions");
+    };
     return (
         <>
             <div className="dashboard-topbar">
@@ -131,7 +131,7 @@ function Dashboard() {
                             <h2 className="graph-title">Profile Views</h2>
                             <img src={view} alt="graph" className="graph-image" />
                         </div>
-                       <TaskList/>
+                        <TaskList />
                     </div>
                     <div className="single-row-container">
                         <div className="single-row-box data-analysis-box">
