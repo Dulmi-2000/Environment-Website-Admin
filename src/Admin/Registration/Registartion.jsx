@@ -23,10 +23,7 @@ const AdminRegistration = ({ onSignupSuccess }) => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleFileChange = (e) => {
-        setFormData({ ...formData, profileImage: e.target.files[0] });
-    };
-
+    
     const handleCheckboxChange = (e) => {
         setFormData({ ...formData, terms: e.target.checked });
     };
@@ -62,7 +59,7 @@ const AdminRegistration = ({ onSignupSuccess }) => {
             const data = JSON.parse(text);
             console.log('Registration successful:', data);
             onSignupSuccess();
-            navigate('/login'); // Redirect to the login page
+            navigate('/login'); 
         } catch (error) {
             console.error('Error:', error);
             alert(`Error: ${error.message}`);
@@ -136,15 +133,7 @@ const AdminRegistration = ({ onSignupSuccess }) => {
                     placeholder='Contact Number'
                     className='reg-input'
                 />
-                {/* Profile Image Upload */}
-                <input
-                    type="file"
-                    id="profileImage"
-                    name="profileImage"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className='reg-input'
-                />
+               
 
                 <div className='agree-txt'>
                     <input

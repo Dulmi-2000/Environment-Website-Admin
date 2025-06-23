@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Topbar from '../../Components/Topbar/Topbar'; // Import your topbar component
-import { MdOutlineDeleteOutline } from 'react-icons/md'; // Import delete icon
+import Topbar from '../../Components/Topbar/Topbar'; 
+import { MdOutlineDeleteOutline } from 'react-icons/md'; 
 
 function ViewPublications() {
   const [publications, setPublications] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Fetch publications when the component loads
+  
   useEffect(() => {
     fetchPublications();
   }, []);

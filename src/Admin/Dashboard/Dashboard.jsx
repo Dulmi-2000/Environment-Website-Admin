@@ -106,7 +106,7 @@ function Dashboard() {
                         <div className="info-box" onClick={handleBoxClick2}>
                             <div className="box-side">
                                 <h5 className="box-title">Job Applications</h5>
-                                <h5 className="box-title-count">510</h5>
+                                <h5 className="box-title-count">8</h5>
                             </div>
                             <div className="box-side">
                                 <div className="icon-box">
@@ -117,7 +117,7 @@ function Dashboard() {
                         <div className="info-box" onClick={handleBoxClick3}>
                             <div className="box-side">
                                 <h5 className="box-title">NGO Applications</h5>
-                                <h5 className="box-title-count">510</h5>
+                                <h5 className="box-title-count">5</h5>
                             </div>
                             <div className="box-side">
                                 <div className="icon-box">

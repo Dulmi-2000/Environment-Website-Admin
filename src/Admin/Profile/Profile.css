@@ -8,7 +8,6 @@
 }
 
 .profile-data{
- 
     flex-direction: column;
     gap: 10px;
     display: flex;
@@ -32,17 +31,28 @@
 .profile-row {
     display: flex;
     justify-content: flex-start; 
-    padding: 5px 0; /* Vertical spacing between rows */
+    padding: 5px 0; 
 }
 
 .profile-label {
     font-weight: 600;
     font-size: 20px;
-    width: 200px; /* Fixed width for labels to align them properly */
+    width: 200px; 
 }
 
 .profile-info {
-    flex: 1; /* Allow info to take remaining space */
+    flex: 1; 
     font-size: 17px;
     letter-spacing: 0.45;
+}
+
+.profile-edit{
+    font-size: 25px;
+}
+
+.edit-prfile-box{
+    
+    display: flex;
+    margin-left: 700px;
+    color: #2d6a4f;;
 }

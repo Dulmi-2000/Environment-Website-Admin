@@ -14,7 +14,7 @@ const AdminLogin = ({ onLogin }) => {
         setFormData(prevState => ({ ...prevState, [name]: value }));
 
         if (error) {
-            setError('');
+            setError(''); 
         }
     };
 
@@ -22,44 +22,43 @@ const AdminLogin = ({ onLogin }) => {
         e.preventDefault();
         setLoading(true);
         
+        // Normalize username and password
         const normalizedUsername = formData.username.trim().toLowerCase();
-        const normalizedPassword = formData.password.trim();  // Trim password as well
-    
-        console.log('Submitting Login:', { username: normalizedUsername, password: normalizedPassword });
+        const normalizedPassword = formData.password.trim(); 
     
         try {
             const response = await axios.post('http://localhost:3000/api/admin/login', {
                 username: normalizedUsername,
                 password: normalizedPassword,
             });
-    
-            console.log('Login successful:', response.data);
+
+            console.log('API Response:', response.data); 
+            
+            // Check for token in response
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 onLogin(); 
                 navigate('/Dashboard'); 
+            } else {
+                setError('Login failed. Please try again.'); 
             }
         } catch (error) {
-            console.error('Error Response:', error.response);
             if (error.response) {
-                setError(error.response.data.message);
+                setError(error.response.data.message || 'Login failed. Please try again.'); 
             } else {
                 setError('An unexpected error occurred. Please try again later.');
             }
         } finally {
-            setLoading(false);
+            setLoading(false); 
         }
     };
-    
-    
-    
-    
+
     return (
         <div className="admin-registration">
             <img src={logo} alt='logo' className='reg-pglogo' />
             <form className='reg-form' onSubmit={handleLogin}>
                 <h2 className='headings-reg'>Admin Login</h2>
-                {error && <p className="error-message">{error}</p>}
+                
                 <input
                     type="text"
                     id="username"
@@ -83,6 +82,8 @@ const AdminLogin = ({ onLogin }) => {
                 <button type="submit" className="reg-btn" disabled={loading}>
                     {loading ? 'Logging in...' : 'Login'}
                 </button>
+
+                {error && <p className="error-message">{error}</p>}
             </form>
             <p className='signin-link'>
                 Don't have an account? <Link to="/Signup">Sign up here</Link>

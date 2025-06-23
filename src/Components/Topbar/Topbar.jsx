@@ -29,7 +29,7 @@ const Topbar = ({ onLogout }) => {
                 <input type="text" placeholder="Search here" className="search-bar" />
                 <RiSearchLine className="search-icon" />
 
-                <Link to="/notifications">
+                <Link >
                     <IoNotifications className="topbar-icon" />
                 </Link>
                 <Link to="/Settings">
@@ -39,7 +39,7 @@ const Topbar = ({ onLogout }) => {
                 <div className="profile-container" onClick={toggleDropdown}>
                     <img src={profileImage} alt="Profile" className="profile-logo" />
                     {isDropdownOpen && (
-                        <div className="dropdowns">
+                <div className="dropdowns">
                             <Link to="/Profile" className="dropdown-items" onClick={() => setDropdownOpen(false)}>
                                 <CgProfile className="dropdown-icons" /> Profile
                             </Link>
